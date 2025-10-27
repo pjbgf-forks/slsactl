@@ -58,8 +58,8 @@ runs:
         cosign verify-blob \
             --certificate-identity "https://${REPO}/.github/workflows/release.yml@refs/tags/${VERSION}" \
             --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
-            --certificate "slsactl_${VERSION#v}_checksums.txt.pem" \
-            --signature "slsactl_${VERSION#v}_checksums.txt.sig" "slsactl_${VERSION#v}_checksums.txt"
+            --new-bundle-format=true \
+            --bundle "slsactl_${VERSION#v}_checksums.sigstore.json" "slsactl_${VERSION#v}_checksums.txt"
 
         OS="linux"
         if [[ ${RUNNER_OS} != "Linux" ]]; then
