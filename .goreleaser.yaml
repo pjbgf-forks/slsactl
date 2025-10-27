@@ -25,13 +25,12 @@ archives:
 
 signs:
   - cmd: cosign
-    certificate: '${artifact}.pem'
+    signature: "${artifact}.sigstore.json"
     args:
       - sign-blob
       - '--yes'
-      - '--output-signature=${signature}'
-      - '--output-certificate=${certificate}'
-      - '--bundle=${artifact}.bundle'
+      - '--new-bundle-format=true' # Remove after bump to cosign v3+
+      - '--bundle=${signature}'
       - '${artifact}'
     artifacts: checksum
     output: true
@@ -42,4 +41,4 @@ source:
 
 release:
   extra_files:
-    - glob: ./**/*.bundle
+    - glob: ./**/*.sigstore.json
